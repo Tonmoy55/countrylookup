@@ -26,45 +26,6 @@ public class CountryService {
     @Value("${api.key}")
     private String apiKey;
 
-    /**
-     * Read all JSON data
-     *
-     * @param rd
-     * @return
-     * @throws IOException
-     */
-    private static String readAll(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-        return sb.toString();
-    }
-
-
-    //region private
-
-    /**
-     * Get JSON data from the external UI
-     *
-     * @param url
-     * @return
-     * @throws IOException
-     * @throws JSONException
-     */
-    private static JSONArray readJsonFromUrl(String url) throws IOException, JSONException {
-        InputStream is = new URL(url).openStream();
-        try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            String jsonText = readAll(rd);
-            // JSONObject json = new JSONObject(jsonText);
-            JSONArray json = new JSONArray(jsonText);
-            return json;
-        } finally {
-            is.close();
-        }
-    }
 
     /**
      * Get country information by country name
@@ -132,5 +93,44 @@ public class CountryService {
         }
         return country;
     }
+
+    //region private
+    /**
+     * Read all JSON data
+     *
+     * @param rd
+     * @return
+     * @throws IOException
+     */
+    private static String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Get JSON data from the external UI
+     *
+     * @param url
+     * @return
+     * @throws IOException
+     * @throws JSONException
+     */
+    private static JSONArray readJsonFromUrl(String url) throws IOException, JSONException {
+        InputStream is = new URL(url).openStream();
+        try {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            String jsonText = readAll(rd);
+            // JSONObject json = new JSONObject(jsonText);
+            JSONArray json = new JSONArray(jsonText);
+            return json;
+        } finally {
+            is.close();
+        }
+    }
     //end region
+
 }
